@@ -6,30 +6,28 @@ export default function HomeScreen() {
   const success = async () => {
     console.log('starting success call...');
     const res = await axios.get(
-      "https://demo.komga.org/api/v2/users/me",
-      {
-        timeout: 10000,
-        auth: {
-          username: 'demo@komga.org',
-          password: 'komga-demo',
-        }
-      }
+      "http://192.168.0.82:3000/success",
+      { timeout: 10000 }
     );
     console.log('success call finished');
     console.log(res.data);
   };
 
-  const fail = async () => {
-    console.log('starting fail call...');
+  const failWithHeader = async () => {
+    console.log('starting fail w/ header call...');
     const res = await axios.get(
-      "https://demo.komga.org/api/v2/users/me",
-      {
-        timeout: 10000, // Uncomment this line to see request hang
-        auth: {
-          username: 'invalid@komga.org',
-          password: 'invalid',
-        }
-      }
+      "http://192.168.0.82:3000/fail-header",
+      { timeout: 10000 } // Comment this line to see request hang
+    ).catch(console.error);
+    console.log('fail call finished');
+    console.log(res?.data);
+  };
+
+  const failWithoutHeader = async () => {
+    console.log('starting fail w/o call...');
+    const res = await axios.get(
+      "http://192.168.0.82:3000/fail-no-header",
+      { timeout: 10000 }
     ).catch(console.error);
     console.log('fail call finished');
     console.log(res?.data);
@@ -40,8 +38,11 @@ export default function HomeScreen() {
       <Pressable onPress={success} style={styles.button}>
         <Text>Success</Text>
       </Pressable>
-      <Pressable onPress={fail} style={styles.button}>
-        <Text>Fail</Text>
+      <Pressable onPress={failWithoutHeader} style={styles.button}>
+        <Text>Fail W/O Header</Text>
+      </Pressable>
+      <Pressable onPress={failWithHeader} style={styles.button}>
+        <Text>Fail W/ Header</Text>
       </Pressable>
     </SafeAreaView>
   );
