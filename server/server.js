@@ -24,6 +24,10 @@ app.get('/fail-no-header', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log('IP: ' + Object.values(networkInterfaces()).flat().filter(iface => iface.family === 'IPv4' && !iface.internal).map(iface => iface.address).join(', '));
+  const ip = Object.values(networkInterfaces()).flat().find(iface => iface.family === 'IPv4' && !iface.internal);
+  if (!ip) {
+    console.error('No IPv4 address found for the server.');
+    return;
+  }
+  console.log(`Server is running on http://${ip.address}:${PORT}`);
 });

@@ -2,11 +2,13 @@ import { Pressable, SafeAreaView, StyleSheet, Text } from 'react-native';
 
 import axios from 'axios';
 
+const SERVER = 'http://<ip_address>:3000'; // Replace with your server's IP address
+
 export default function HomeScreen() {
   const success = async () => {
     console.log('starting success call...');
     const res = await axios.get(
-      "http://192.168.0.82:3000/success",
+      `${SERVER}/success`,
       { timeout: 10000 }
     );
     console.log('success call finished');
@@ -16,8 +18,8 @@ export default function HomeScreen() {
   const failWithHeader = async () => {
     console.log('starting fail w/ header call...');
     const res = await axios.get(
-      "http://192.168.0.82:3000/fail-header",
-      { timeout: 10000 } // Comment this line to see request hang
+      `${SERVER}/fail-header`,
+      { timeout: 10000 } // Comment this line to see the request fail to resolve with the debugger
     ).catch(console.error);
     console.log('fail call finished');
     console.log(res?.data);
@@ -26,7 +28,7 @@ export default function HomeScreen() {
   const failWithoutHeader = async () => {
     console.log('starting fail w/o call...');
     const res = await axios.get(
-      "http://192.168.0.82:3000/fail-no-header",
+      `${SERVER}/fail-no-header`,
       { timeout: 10000 }
     ).catch(console.error);
     console.log('fail call finished');
