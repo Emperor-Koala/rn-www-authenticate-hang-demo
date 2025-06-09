@@ -14,7 +14,7 @@ To make this demo work:
 1. Install dependencies
 
    ```bash
-   yarn
+   pnpm i
    ```
 
 2. In one terminal start the server:
@@ -28,7 +28,7 @@ To make this demo work:
 4. In another terminal, Start the app
 
    ```bash
-   yarn start
+   pnpm start
    ```
 
 5. Connect an iOS Device
